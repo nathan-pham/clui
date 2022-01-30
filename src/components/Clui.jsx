@@ -1,75 +1,11 @@
 import { useEffect, useState, useRef } from "react";
-import { ChevronRightIcon, CrossCircledIcon, CheckCircledIcon } from "@radix-ui/react-icons";
+import { ChevronRightIcon } from "@radix-ui/react-icons";
 
 import theme from "@components/theme";
 
 import AutoCompleteResults from "@components/AutoCompleteResults";
+import CommandCell from "@components/Command/CommandCell";
 import Command from "@components/Command/Command";
-
-import DisposeButton from "@components/Form/DisposeButton";
-import SubmitButton from "@components/Form/SubmitButton";
-import Input from "@components/Form/Input";
-
-const CommandCell = ({ name, description, onComplete, args, dispose }) => {
-    const [result, setResult] = useState();
-    const [Icon, setIcon] = useState(CheckCircledIcon);
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-
-        const argValues = [...e.target.querySelectorAll("input")].map((i) => i.value);
-
-        try {
-            setResult(await onComplete(...argValues));
-        } catch (e) {
-            setIcon(CrossCircledIcon);
-        }
-    };
-
-    return (
-        <div
-            css={{
-                width: "100%",
-                marginTop: "3rem",
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "flex-end",
-            }}
-        >
-            <DisposeButton dispose={dispose} />
-            <div
-                css={{
-                    width: "100%",
-                    background: theme.inputBackground,
-                    color: theme.white,
-                    padding: "1rem",
-                    borderRadius: "0.75rem",
-                    border: `1px solid ${theme.border}`,
-                }}
-            >
-                <span>{description}</span>
-                <form onSubmit={onSubmit} css={{ marginTop: "1rem" }}>
-                    {result ? (
-                        <>
-                            <p css={{ margin: "1rem 0 0 0", display: "flex", alignItems: "center" }}>
-                                <Icon css={{ marginRight: "0.5rem" }} />
-                                {result}
-                            </p>
-                        </>
-                    ) : (
-                        <>
-                            {args.map((arg, i) => (
-                                <Input {...arg} key={i} />
-                            ))}
-
-                            <SubmitButton />
-                        </>
-                    )}
-                </form>
-            </div>
-        </div>
-    );
-};
 
 const Clui = ({ availableCommands }) => {
     const [commands, setCommands] = useState([]);
@@ -81,19 +17,15 @@ const Clui = ({ availableCommands }) => {
     const [focus, setFocus] = useState(false);
     const cluiRef = useRef(null);
 
-    // const setFocus = (f) => {
-    //     _setFocus(f);
-    //     if (f) {
-    //     } else {
-    //     }
-    // };
-
     const onKeyDown = (e) => {
         const key = e.key.toLowerCase();
 
         switch (key) {
             case "backspace":
-                if (document.getSelection().toString().trim().length == 0 && query.length == 0) {
+                if (
+                    document.getSelection().toString().trim().length == 0 &&
+                    query.length == 0
+                ) {
                     setCommands((c) => c.slice(0, -1));
                 }
                 break;
@@ -134,7 +66,12 @@ const Clui = ({ availableCommands }) => {
 
     useEffect(() => {
         if (focus) {
-            setCompleteResults((commands.length ? commands[commands.length - 1]?.commands || [] : availableCommands).filter((c) => c.name.includes(query.toLowerCase())));
+            setCompleteResults(
+                (commands.length
+                    ? commands[commands.length - 1]?.commands || []
+                    : availableCommands
+                ).filter((c) => c.name.includes(query.toLowerCase()))
+            );
         } else {
             setCompleteResults([]);
         }
@@ -156,9 +93,13 @@ const Clui = ({ availableCommands }) => {
                     width: "100%",
                     padding: "0.75rem",
                     outline: "none",
-                    borderRadius: completeResults.length ? "0.75rem 0.75rem 0 0" : "0.75rem",
+                    borderRadius: completeResults.length
+                        ? "0.75rem 0.75rem 0 0"
+                        : "0.75rem",
                     border: `1px solid ${theme.border}`,
-                    borderBottom: completeResults.length ? `1px solid ${theme.inputBackground}` : "",
+                    borderBottom: completeResults.length
+                        ? `1px solid ${theme.inputBackground}`
+                        : "",
                     position: "relative",
                 }}
             >
@@ -207,12 +148,19 @@ const Clui = ({ availableCommands }) => {
                     }}
                 />
 
-                <AutoCompleteResults completeResults={completeResults} setCommands={setCommands} setQuery={setQuery} cluiRef={cluiRef} />
+                <AutoCompleteResults
+                    completeResults={completeResults}
+                    setCommands={setCommands}
+                    setQuery={setQuery}
+                    cluiRef={cluiRef}
+                />
             </div>
 
             {commandCells.map((cell, i) => {
                 const dispose = () => {
-                    setCommandCells((_commandCells) => _commandCells.filter((_, j) => j !== i));
+                    setCommandCells((_commandCells) =>
+                        _commandCells.filter((_, j) => j !== i)
+                    );
                 };
 
                 return <CommandCell {...cell} key={i} dispose={dispose} />;
