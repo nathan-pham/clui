@@ -10,17 +10,20 @@ import Input from "@components/Form/Input";
 const CommandCell = ({
     description,
     onComplete,
-    args=[],
-    dispose=() => {},
-    setCommandCells=() => {},
+    args = [],
+    dispose = () => {},
+    setCommandCells = () => {},
 }) => {
     const [result, setResult] = useState();
+    const [visible, setVisible] = useState(false);
     const [Icon, setIcon] = useState(CheckCircledIcon);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const argValues = [setCommandCells].concat([...e.target.querySelectorAll("input")].map((i) => i.value) || []);
+        const argValues = [setCommandCells].concat(
+            [...e.target.querySelectorAll("input")].map((i) => i.value) || []
+        );
 
         try {
             setResult(await onComplete(...argValues));
@@ -31,12 +34,21 @@ const CommandCell = ({
     };
 
     useEffect(async () => {
-        if(!args) {
-            setResult(await onComplete(setCommandCells));
-        }
-    }, [])
+        if (!args.length) {
+            const _result = await onComplete(setCommandCells);
 
-    return (
+            if (_result) {
+                setVisible(true);
+                setResult(_result);
+            } else {
+                dispose();
+            }
+        } else {
+            setVisible(true);
+        }
+    }, []);
+
+    return visible ? (
         <div
             css={{
                 width: "100%",
@@ -91,6 +103,8 @@ const CommandCell = ({
                 </form>
             </div>
         </div>
+    ) : (
+        <></>
     );
 };
 
