@@ -3,7 +3,9 @@ const theme = {
     inputPlaceholder: "#9da1a5",
     inputHoverPlaceholder: "#c2c8cc",
 
-    buttonHover: "#343b51",
+    buttonHoverBackground: "#343b51",
+    buttonPrimaryBackground: "#0053a6",
+    buttonPrimaryBorder: "#57abff",
 
     commandBackground: "#2b3245",
     commandHoverBackground: "#0053a6",
