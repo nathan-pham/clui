@@ -1,19 +1,23 @@
-import Clui from "./components/Clui";
-import theme from "./components/theme";
+import { GearIcon } from "@radix-ui/react-icons";
 
-import settingsSrc from "./components/assets/settings.svg";
+import Clui from "@components/Clui";
+import theme from "@components/theme";
 
 const availableCommands = [
     {
-        icon: settingsSrc,
+        icon: GearIcon,
         name: "account",
         description: "Manage your account",
         commands: [
             {
-                icon: settingsSrc,
+                icon: GearIcon,
                 name: "delete",
-                description: "Delete your account"
-            }
+                description: "Delete your account",
+
+                args: ["ok"],
+                fetchContent: () => ``,
+                onComplete: (_, ok) => console.log("completed command", ok),
+            },
         ],
     },
     {

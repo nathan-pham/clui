@@ -1,5 +1,5 @@
-import Command from "./Command";
-import theme from "./theme";
+import Command from "@components/Command/Command";
+import theme from "@components/theme";
 
 const AutoCompleteResults = ({
     completeResults,
@@ -20,11 +20,13 @@ const AutoCompleteResults = ({
                 background: theme.inputBackground,
                 position: "absolute",
                 top: "100%",
-                left: "0",
-                width: "100%",
+                left: "-1px",
+                width: "calc(100% + 2px)",
                 borderRadius: "0 0 0.75rem 0.75rem",
                 userSelect: "none",
                 overflow: "hidden",
+                border: `1px solid ${theme.border}`,
+                borderTop: "none"
             }}
         >
             {completeResults.map((r, i) => (

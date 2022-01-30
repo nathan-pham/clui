@@ -1,6 +1,6 @@
-import theme from "./theme";
+import theme from "@components/theme";
 
-const Command = ({ name, icon, className }) => {
+const Command = ({ name, icon: Icon, className }) => {
     return (
         <div
             className={className}
@@ -16,7 +16,7 @@ const Command = ({ name, icon, className }) => {
                 width: "fit-content"
             }}
         >
-            {icon ? <img src={icon} css={{ marginRight: "0.5rem" }} /> : <></>}
+            {Icon ? <Icon css={{ marginRight: "0.5rem", color: theme.white }} /> : <></>}
             {name}
         </div>
     );
