@@ -13,10 +13,19 @@ const Command = ({ name, icon: Icon, className }) => {
                 userSelect: "none",
                 display: "flex",
                 alignItems: "center",
-                width: "fit-content"
+                width: "fit-content",
             }}
         >
-            {Icon ? <Icon css={{ marginRight: "0.5rem", color: theme.white }} /> : <></>}
+            {Icon ? (
+                <Icon
+                    css={{
+                        marginRight: "0.5rem",
+                        color: theme.white,
+                    }}
+                />
+            ) : (
+                <></>
+            )}
             {name}
         </div>
     );

@@ -21,6 +21,7 @@ const CommandCell = ({ description, onComplete, args, dispose }) => {
         try {
             setResult(await onComplete(...argValues));
         } catch (e) {
+            setResult(e.message);
             setIcon(CrossCircledIcon);
         }
     };
@@ -55,10 +56,17 @@ const CommandCell = ({ description, onComplete, args, dispose }) => {
                                     margin: "1rem 0 0 0",
                                     display: "flex",
                                     alignItems: "center",
+                                    wordBreak: "break-all",
                                 }}
                             >
-                                <Icon css={{ marginRight: "0.5rem" }} />
-                                {result}
+                                <Icon
+                                    css={{
+                                        marginRight: "0.5rem",
+                                    }}
+                                />
+                                <span
+                                    dangerouslySetInnerHTML={{ __html: result }}
+                                ></span>
                             </p>
                         </>
                     ) : (

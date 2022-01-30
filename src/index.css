@@ -25,3 +25,12 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
 }
+
+a, a:visited {
+    color: #0080ff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

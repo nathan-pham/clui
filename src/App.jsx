@@ -1,35 +1,54 @@
-import { GearIcon, TrashIcon } from "@radix-ui/react-icons";
+import { GearIcon, TrashIcon, EyeOpenIcon } from "@radix-ui/react-icons";
 
 import Clui from "@components/Clui";
 import theme from "@components/theme";
 
 const availableCommands = [
     {
-        icon: GearIcon,
-        name: "account",
-        description: "Manage your account",
-        commands: [
-            {
-                icon: TrashIcon,
-                name: "delete",
-                description: "Delete your account",
+        icon: EyeOpenIcon,
+        name: "banner",
+        description: "Generate a project banner",
 
-                args: [
-                    { name: "ok", description: "Type an ok!", type: "text" }
-                ],
-                // fetchContent: () => ``,
-                onComplete: (ok) => {
-                    console.log("completed command", ok)
-                    return "Finished!"
-                },
-            },
+        args: [
+            { name: "title", description: "Enter a project title" },
+            { name: "description", description: "Enter a project description" },
+            { name: "stack", description: "Enter a project tech stack" }
         ],
-    },
-    {
-        icon: TrashIcon,
-        name: "trash",
-        description: "List and store deleted repls",
-    },
+        onComplete: (title, description, stack) => {
+            const host = new URL( "https://project-banner.phamn23.repl.co")
+
+            host.searchParams.append("title", title)
+            host.searchParams.append("description", description)
+            host.searchParams.append("stack", stack)
+            return `<a href="${host.toString()}" target="__blank">project banner</a>`
+
+        }
+    }
+    // {
+    //     icon: GearIcon,
+    //     name: "account",
+    //     description: "Manage your account",
+    //     commands: [
+    //         {
+    //             icon: TrashIcon,
+    //             name: "delete",
+    //             description: "Delete your account",
+
+    //             args: [
+    //                 { name: "ok", description: "Type an ok!", type: "text" }
+    //             ],
+    //             onComplete: (ok) => {
+    //                 console.log("completed command", ok)
+    //                 return "Finished!"
+    //             },
+    //         },
+    //     ],
+    // },
+    // {
+    //     icon: TrashIcon,
+    //     name: "trash",
+    //     description: "List and store deleted repls",
+    // },
 ];
 
 const App = () => (

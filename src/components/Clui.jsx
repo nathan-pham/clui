@@ -34,7 +34,7 @@ const Clui = ({ availableCommands }) => {
                 const command = commands.slice(-1)[0];
 
                 if (command?.args) {
-                    setCommandCells((c) => [command, ...c]);
+                    setCommandCells((c) => [...c, command]);
                     setCommands([]);
                     setFocus(false);
                     document.activeElement.blur();
@@ -156,15 +156,17 @@ const Clui = ({ availableCommands }) => {
                 />
             </div>
 
-            {commandCells.map((cell, i) => {
-                const dispose = () => {
-                    setCommandCells((_commandCells) =>
-                        _commandCells.filter((_, j) => j !== i)
-                    );
-                };
+            <div css={{ display: "flex", flexDirection: "column-reverse" }}>
+                {commandCells.map((cell, i) => {
+                    const dispose = () => {
+                        setCommandCells((_commandCells) =>
+                            _commandCells.filter((_, j) => j !== i)
+                        );
+                    };
 
-                return <CommandCell {...cell} key={i} dispose={dispose} />;
-            })}
+                    return <CommandCell {...cell} key={i} dispose={dispose} />;
+                })}
+            </div>
 
             <footer css={{ height: "3rem", width: "100%" }}></footer>
         </div>
