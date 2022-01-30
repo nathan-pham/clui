@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CrossCircledIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 
 import theme from "@components/theme";
@@ -7,16 +7,20 @@ import DisposeButton from "@components/Form/DisposeButton";
 import SubmitButton from "@components/Form/SubmitButton";
 import Input from "@components/Form/Input";
 
-const CommandCell = ({ description, onComplete, args, dispose }) => {
+const CommandCell = ({
+    description,
+    onComplete,
+    args=[],
+    dispose=() => {},
+    setCommandCells=() => {},
+}) => {
     const [result, setResult] = useState();
     const [Icon, setIcon] = useState(CheckCircledIcon);
 
     const onSubmit = async (e) => {
         e.preventDefault();
 
-        const argValues = [...e.target.querySelectorAll("input")].map(
-            (i) => i.value
-        );
+        const argValues = [setCommandCells].concat([...e.target.querySelectorAll("input")].map((i) => i.value) || []);
 
         try {
             setResult(await onComplete(...argValues));
@@ -25,6 +29,12 @@ const CommandCell = ({ description, onComplete, args, dispose }) => {
             setIcon(CrossCircledIcon);
         }
     };
+
+    useEffect(async () => {
+        if(!args) {
+            setResult(await onComplete(setCommandCells));
+        }
+    }, [])
 
     return (
         <div

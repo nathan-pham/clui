@@ -14,7 +14,7 @@ const availableCommands = [
             { name: "description", description: "Enter a project description" },
             { name: "stack", description: "Enter a project tech stack" }
         ],
-        onComplete: (title, description, stack) => {
+        onComplete: (_, title, description, stack) => {
             const host = new URL( "https://project-banner.phamn23.repl.co")
 
             host.searchParams.append("title", title)
@@ -23,32 +23,16 @@ const availableCommands = [
             return `<a href="${host.toString()}" target="__blank">project banner</a>`
 
         }
-    }
-    // {
-    //     icon: GearIcon,
-    //     name: "account",
-    //     description: "Manage your account",
-    //     commands: [
-    //         {
-    //             icon: TrashIcon,
-    //             name: "delete",
-    //             description: "Delete your account",
+    },
+    {
+        icon: TrashIcon,
+        name: "clear",
+        description: "Delete all command cells",
 
-    //             args: [
-    //                 { name: "ok", description: "Type an ok!", type: "text" }
-    //             ],
-    //             onComplete: (ok) => {
-    //                 console.log("completed command", ok)
-    //                 return "Finished!"
-    //             },
-    //         },
-    //     ],
-    // },
-    // {
-    //     icon: TrashIcon,
-    //     name: "trash",
-    //     description: "List and store deleted repls",
-    // },
+        onComplete: (setCommandCells) => {
+            setCommandCells([])
+        }
+    }
 ];
 
 const App = () => (

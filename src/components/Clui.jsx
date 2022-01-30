@@ -33,7 +33,7 @@ const Clui = ({ availableCommands }) => {
             case "enter":
                 const command = commands.slice(-1)[0];
 
-                if (command?.args) {
+                if (command?.args || command?.onComplete) {
                     setCommandCells((c) => [...c, command]);
                     setCommands([]);
                     setFocus(false);
@@ -164,7 +164,14 @@ const Clui = ({ availableCommands }) => {
                         );
                     };
 
-                    return <CommandCell {...cell} key={i} dispose={dispose} />;
+                    return (
+                        <CommandCell
+                            {...cell}
+                            key={i}
+                            dispose={dispose}
+                            setCommandCells={setCommandCells}
+                        />
+                    );
                 })}
             </div>
 
